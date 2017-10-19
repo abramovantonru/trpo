@@ -40,20 +40,3 @@ function getRequestCountPerDay($requests){
 	}
 	return $days;
 }
-
-/**
- * @return bool|null|string
- */
-function createTempDir() {
-	$tmpDir = sys_get_temp_dir();
-	$tempfile = tempnam($tmpDir, '');
-
-	if (file_exists($tempfile))
-		unlink($tempfile);
-	mkdir($tempfile);
-	if (is_dir($tempfile))
-		return $tempfile;
-	else
-		return null;
-}
-
