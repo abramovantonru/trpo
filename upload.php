@@ -1,5 +1,5 @@
 <?
-
+require_once $_SERVER['DOCUMENT_ROOT'] . '/modules/core.php';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -11,13 +11,13 @@
 <body>
 
 <div class="wrapper">
-	<form enctype="multipart/form-data" method="post" action="">
+	<form enctype="multipart/form-data" method="post" action="/parse.php">
 		<div>
 			<div>
-				<label for="image_file">Выберите файл с логом</label>
+				<label for="<?= fileInputName ?>">Выберите файл с логом</label>
 			</div>
 			<div>
-				<input type="file" name="image_file" id="image_file"/>
+				<input type="file" name="<?= fileInputName ?>" id="<?= fileInputName ?>"/>
 			</div>
 		</div>
 		<div>
