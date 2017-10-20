@@ -3,10 +3,17 @@
 $a = $b = 1;
 $da = $db = 0;
 
-$x = getX($_SERVER['DOCUMENT_ROOT'] . '/output/x');
+$x = getValues($_SERVER['DOCUMENT_ROOT'] . '/output/values');
 
 $A1 = A1($b, $x);
 
+/**
+ * @param $a
+ * @param $b
+ * @param $x
+ * @param $y
+ * @return int
+ */
 function F1($a, $b, $x, $y){
 	$sum = 0;
 	$len = count($x);
@@ -17,6 +24,13 @@ function F1($a, $b, $x, $y){
 	return $sum;
 }
 
+/**
+ * @param $a
+ * @param $b
+ * @param $x
+ * @param $y
+ * @return int
+ */
 function F2($a, $b, $x, $y){
 	$sum = 0;
 	$len = count($x);
@@ -27,6 +41,11 @@ function F2($a, $b, $x, $y){
 	return $sum;
 }
 
+/**
+ * @param $b
+ * @param $x
+ * @return int
+ */
 function A1($b, $x){
 	$sum = 0;
 	$len = count($x);
@@ -37,6 +56,13 @@ function A1($b, $x){
 	return $sum;
 }
 
+/**
+ * @param $a
+ * @param $b
+ * @param $x
+ * @param $y
+ * @return int
+ */
 function A2($a, $b, $x, $y){
 	$sum = 0;
 	$len = count($x);
@@ -47,6 +73,13 @@ function A2($a, $b, $x, $y){
 	return $sum;
 }
 
+/**
+ * @param $a
+ * @param $b
+ * @param $x
+ * @param $y
+ * @return int
+ */
 function B1($a, $b, $x, $y){
 	$sum = 0;
 	$len = count($x);
@@ -57,6 +90,13 @@ function B1($a, $b, $x, $y){
 	return $sum;
 }
 
+/**
+ * @param $a
+ * @param $b
+ * @param $x
+ * @param $y
+ * @return int
+ */
 function B2($a, $b, $x, $y){
 	$sum = 0;
 	$len = count($x);
@@ -67,21 +107,39 @@ function B2($a, $b, $x, $y){
 	return $sum;
 }
 
+/**
+ * @param $a
+ * @param $b
+ * @param $x
+ * @param $y
+ * @return int
+ */
 function C1($a, $b, $x, $y){
 	return -1 * F1($a, $b, $x, $y);
 }
 
+/**
+ * @param $a
+ * @param $b
+ * @param $x
+ * @param $y
+ * @return int
+ */
 function C2($a, $b, $x, $y){
 	return -1 * F2($a, $b, $x, $y);
 }
 
-function getX($filepath){
+/**
+ * @param $filepath
+ * @return array
+ */
+function getValues($filepath){
 	$x = [];
 
 	$handle = fopen($filepath, 'r');
 	if ($handle) {
 		while (($value = fgets($handle)) !== false)
-			$x[] = $value;
+			$x[] = (int)str_replace(PHP_EOL, '', $value);
 
 		fclose($handle);
 	}
