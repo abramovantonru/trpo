@@ -15,6 +15,7 @@ if(isset($_FILES[fileInputName]['tmp_name']) && !empty($_FILES[fileInputName]['t
 
 	unlink($filePath);
 
+	saveValues($_SERVER['DOCUMENT_ROOT'] . '/output/values', $stats);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -31,4 +32,17 @@ if(isset($_FILES[fileInputName]['tmp_name']) && !empty($_FILES[fileInputName]['t
 
 </body>
 </html>
-<?}?>
+<?}
+
+function saveValues($filepath, $stats){
+	$content = '';
+
+	foreach ($stats as $val)
+		$content .= $val . PHP_EOL;
+
+	$content = substr($content, 0, -1 * strlen(PHP_EOL));
+
+	file_put_contents($filepath, $content);
+}
+
+?>

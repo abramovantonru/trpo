@@ -3,9 +3,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/class/UserInfo.php';
 use Log\Generator\UserInfo;
 
-$start = $_GET['start'] . ' 00:00:00'; // start
-$days = 365; // days count
-$populate = 1;//$_GET['populate']; //
+$start = $_GET['start'] . ' 00:00:00'; // start date
 
 $cachedClients = [];
 $requests = [];
@@ -54,7 +52,7 @@ define('settings', [
 ]);
 
 $day_timestamp = DateTime::createFromFormat('d.m.Y H:i:s', $start)->getTimestamp();
-for($d = 0; $d < $days; $d++){
+for($d = 0; $d < days; $d++){
 	$w = date('w', $day_timestamp); // день недели с вс
 	for ($h = 0; $h < 24; $h++){
 		$content = '';
