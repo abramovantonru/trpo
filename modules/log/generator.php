@@ -3,16 +3,10 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/class/UserInfo.php';
 use Log\Generator\UserInfo;
 
+const hour = 3600;
 $start = $_GET['start'] . ' 00:00:00'; // start date
-
-$cachedClients = [];
-$requests = [];
-$day = 86400;
-$hour = 3600;
-
 $Y = DateTime::createFromFormat('d.m.Y', $_GET['start'])->format('Y');
-$filename = $_SERVER['DOCUMENT_ROOT'] . '/output/' . $Y . '.log';
-
+$filePath = $_SERVER['DOCUMENT_ROOT'] . '/output/' . $Y . '.log';
 define('settings', [
 	// вс
 	[
@@ -51,6 +45,9 @@ define('settings', [
 	],
 ]);
 
+$cachedClients = [];
+$requests = [];
+
 $day_timestamp = DateTime::createFromFormat('d.m.Y H:i:s', $start)->getTimestamp();
 for($d = 0; $d < days; $d++){
 	$w = date('w', $day_timestamp); // день недели с вс
@@ -58,7 +55,7 @@ for($d = 0; $d < days; $d++){
 		$content = '';
 		$requests = [];
 		$count = rand(settings[$w][$h][0], settings[$w][$h][1]);
-		$max_timestamp = $day_timestamp + $hour - 1;
+		$max_timestamp = $day_timestamp + hour - 1;
 
 		for($i = 0; $i < $count; $i++){
 			$rndReplayConnect = rand(0, 4);
@@ -86,9 +83,9 @@ for($d = 0; $d < days; $d++){
 		foreach ($requests as $request)
 			$content .= $request->ip . ' -- ' . date('d.m.Y H:i:s', $request->timestamp) . ' -- ' . $request->page . ' -- ' . $request->agent . PHP_EOL;
 
-		file_put_contents($filename, $content, FILE_APPEND | LOCK_EX);
+		file_put_contents($filePath, $content, FILE_APPEND | LOCK_EX);
 
-		$day_timestamp += $hour;
+		$day_timestamp += hour;
 	}
 }
 

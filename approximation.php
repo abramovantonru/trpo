@@ -2,10 +2,23 @@
 
 $a = $b = 1;
 $da = $db = 0;
+$e = 0.0000001;
 
-$x = getValues($_SERVER['DOCUMENT_ROOT'] . '/output/values');
+$x = [];
+for($i = 0; $i < 8760; $i++){
+	$x[$i] = $i + 1;
+	$a[$i] = F1($a[$i], $b[$i]);
+}
 
-$A1 = A1($b, $x);
+$y = getValues($_SERVER['DOCUMENT_ROOT'] . '/output/values');
+
+$a[0] = F1($a, $b, $x[0], $y[0]);
+
+while((abs($a - abs($da)) <= $e) && (abs($b - abs($db)) <= $e)){
+
+}
+
+echo 'Result: a = ' . $a . '; b = ' . $b;
 
 /**
  * @param $a
