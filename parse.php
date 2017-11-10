@@ -1,8 +1,10 @@
 <?
 require_once $_SERVER['DOCUMENT_ROOT'] . '/modules/core.php';
 
-if(isset($_FILES[fileInputName]['tmp_name']) && !empty($_FILES[fileInputName]['tmp_name'])){
+if(isset($_FILES[fileInputName]['tmp_name']) && !empty($_FILES[fileInputName]['tmp_name'])):
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/modules/log/parser.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/modules/main/approximation.php';
+
 	$filePath = $_FILES[fileInputName]['tmp_name'];
 
 	$requests = getRequestsList($filePath);
@@ -15,7 +17,11 @@ if(isset($_FILES[fileInputName]['tmp_name']) && !empty($_FILES[fileInputName]['t
 
 	unlink($filePath);
 
-	saveValues($_SERVER['DOCUMENT_ROOT'] . '/output/values', $stats);
+	$x = [];
+	for($i = 0; $i < 8760; $i++)
+		$x[$i] = $i + 1;
+
+	$result = approximation($x, $stats);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -28,21 +34,14 @@ if(isset($_FILES[fileInputName]['tmp_name']) && !empty($_FILES[fileInputName]['t
 
 <div class="wrapper">
 	<p>Общее количество запросов: <?= $count ?></p>
+	<br>
+	<p>Коэффициенты:</p>
+	<p>a = <b><?= $result['a'] ?></b></p>
+	<p>b = <b><?= $result['b'] ?></b></p>
 </div>
 
 </body>
 </html>
-<?}
-
-function saveValues($filepath, $stats){
-	$content = '';
-
-	foreach ($stats as $val)
-		$content .= $val . PHP_EOL;
-
-	$content = substr($content, 0, -1 * strlen(PHP_EOL));
-
-	file_put_contents($filepath, $content);
-}
-
-?>
+<?else:
+	http_response_code(404);
+endif;?>

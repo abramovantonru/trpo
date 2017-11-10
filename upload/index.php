@@ -6,7 +6,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/modules/core.php';
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
-	<link rel="stylesheet" href="assets/style.css">
+	<link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
 

@@ -39,3 +39,7 @@ label{
 .upload-btn:hover{
 	border-color: #2579e2;
 }
+
+#start_date{
+	margin-top: 15px;
+}

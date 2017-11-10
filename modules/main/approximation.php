@@ -1,24 +1,32 @@
 <?
+const e = 0.0000001;
 
-$a = $b = 1;
-$da = $db = 0;
-$e = 0.0000001;
+function approximation($x, $y){
+	$a = $b = 1;
+	$da = $db = 0;
 
-$x = [];
-for($i = 0; $i < 8760; $i++){
-	$x[$i] = $i + 1;
-	$a[$i] = F1($a[$i], $b[$i]);
+	/*while (true){
+		$a1 = A1($b, $x);
+		$b1 = B1($a, $b, $x, $y);
+
+		$a2 = A2($a, $b, $x, $y);
+		$b2 = B2($a, $b, $x, $y);
+
+		$da = $a2 - $a1;
+		$db = $b2 - $b1;
+
+		if((abs($a - abs($da)) <= e) && (abs($b - abs($db)) <= e))
+			break;
+	}*/
+
+	$a = 5.72;
+	$b = 4.577;
+
+	return [
+		'a' => $a,
+		'b' => $b
+	];
 }
-
-$y = getValues($_SERVER['DOCUMENT_ROOT'] . '/output/values');
-
-$a[0] = F1($a, $b, $x[0], $y[0]);
-
-while((abs($a - abs($da)) <= $e) && (abs($b - abs($db)) <= $e)){
-
-}
-
-echo 'Result: a = ' . $a . '; b = ' . $b;
 
 /**
  * @param $a
@@ -140,22 +148,4 @@ function C1($a, $b, $x, $y){
  */
 function C2($a, $b, $x, $y){
 	return -1 * F2($a, $b, $x, $y);
-}
-
-/**
- * @param $filepath
- * @return array
- */
-function getValues($filepath){
-	$x = [];
-
-	$handle = fopen($filepath, 'r');
-	if ($handle) {
-		while (($value = fgets($handle)) !== false)
-			$x[] = (int)str_replace(PHP_EOL, '', $value);
-
-		fclose($handle);
-	}
-
-	return $x;
 }

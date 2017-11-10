@@ -4,8 +4,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/class/UserInfo.php';
 use Log\Generator\UserInfo;
 
 const hour = 3600;
-$start = $_GET['start'] . ' 00:00:00'; // start date
-$Y = DateTime::createFromFormat('d.m.Y', $_GET['start'])->format('Y');
+const dateFormat = 'Y-m-d';
+$start = $_POST['start'] . ' 00:00:00'; // start date
+$Y = DateTime::createFromFormat(dateFormat, $_POST['start'])->format('Y');
 $filePath = $_SERVER['DOCUMENT_ROOT'] . '/output/' . $Y . '.log';
 define('settings', [
 	// вс
@@ -48,7 +49,7 @@ define('settings', [
 $cachedClients = [];
 $requests = [];
 
-$day_timestamp = DateTime::createFromFormat('d.m.Y H:i:s', $start)->getTimestamp();
+$day_timestamp = DateTime::createFromFormat(dateFormat . ' H:i:s', $start)->getTimestamp();
 for($d = 0; $d < days; $d++){
 	$w = date('w', $day_timestamp); // день недели с вс
 	for ($h = 0; $h < 24; $h++){
@@ -89,4 +90,4 @@ for($d = 0; $d < days; $d++){
 	}
 }
 
-echo 'Лог-файл веб-ресурса для ' . $Y . ' года успешно сгенерирован!';
+$response =  'Лог-файл веб-ресурса для ' . $Y . ' года успешно сгенерирован!';
